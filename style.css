@@ -1,0 +1,66 @@
+/* HTML ELEMENT STYLES */
+html { height: 100% }
+body { 
+	height: 100%; 
+	margin: 0px; 
+	padding: 0px; 
+	font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif; 
+}
+
+h1{
+	font-size: 1.5em;
+	margin: 0.3em 0;
+}
+
+a, a:visited, a:active, a:hover{
+	color: blue;
+}
+
+/* APPLICATION LAYOUT STYLES */
+#header{
+	height: 100px;
+	padding: 10px;
+	border-bottom: thin solid black;
+}
+
+#statusBox{
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+
+#statusBox > img{
+	margin-left: 10px;
+}
+
+#notice{
+	font-size: .75em;	
+}
+
+#map_canvas { 
+	width: 100%;
+	height: 100%;
+}
+
+/* ADDITIONAL APPLICATION FORMATTING STYLES */
+.infoBox h2{
+	font-size: .9em;
+}
+.infoBox ul{
+	font-size: .8em;
+	margin-bottom: 20px;
+}
+
+.infoBox > ul > li{
+	min-width: 400px;
+}
+
+.edit > a{
+	margin-left: 5px;
+	font-size: .7em;
+	font-weight: bold;
+}
+
+.edit > img{
+	margin-left: 10px;
+}
