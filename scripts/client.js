@@ -260,25 +260,26 @@
 				dataType: "json",
 				data: options,
 				success: function(data){
-					processUpdateNameCallback(data,container);
+					processUpdateNameCallback(data,container,person);
 				},
 				error: genericAjaxErrorCallback
 			});
 		}
 		
 		/* Callback for updatePersonName AJAX request */
-		function processUpdateNameCallback(data,container){
+		function processUpdateNameCallback(data,container,orgPerson){
 			if (data.status == "OK"){
 				// If the request is succesful, set the field back to normal
 				configureNameField(data.data.person,container);
 			}else{
 				// If not, show the error
 				alert(data.data);
+				configureNameField(orgPerson,container);
 			}
 		}
 		
 		function genericAjaxErrorCallback(request, textStatus, errorThrown){
-			alert("An error occured while processing the request (" + textStatus + ":" + errorThrown + "). Please refresh and try again.");
+			alert("An error occured while processing the request (" + textStatus + ":" +  errorThrown + "). Please refresh and try again.");
 		}
 		
 		/* Initialize the application */
