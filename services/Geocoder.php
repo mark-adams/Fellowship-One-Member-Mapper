@@ -37,17 +37,23 @@ class Geocoder{
 	 * @author Mark Adams
 	 */
 	public function getLatLng($address){
+		// Check the cache for the coordinates
 		$cacheResult = $this->db->checkGeocodeCache($address);
 
 		if (!$cacheResult){
+			// If we have a miss, get the coordinates from Google
 			$loc = $this->getLocation($address);
 			if ($loc){
+				// If geocoding is successful, store the result in the cache.
 				$this->db->addGeocodeCache($address,$loc['lat'],$loc['lng']);
 			}else{
+				// Otherwise, store 0's in the cache to indicate a failed geocode.
 				$this->db->addGeocodeCache($address,0,0);
 			}
+			// Return the result
 			$cacheResult = $loc;
 		}else{
+			// If the cache indicates a bad geocode previously, return null.
 			if (($cacheResult['lat'] == "0.0000000") && ($cacheResult['lng'] == "0.0000000")){
 				$cacheResult = null;
 			}
