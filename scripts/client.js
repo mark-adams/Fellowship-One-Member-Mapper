@@ -39,7 +39,8 @@
 		}
 		
 		/* Makes a name entry editable */
-		function makeEditable(clicked,container,person){
+		function makeEditable(clicked,container,person,marker){
+
 			// Save the existing text of the clicked link
 			var text = clicked.innerHTML;
 			
@@ -66,7 +67,7 @@
 			
 			// Add a click handler to update the person's name.
 			$(save).click(function(){
-				updatePersonName(person,field.value,container);
+				updatePersonName(person,marker,container,field.value);
 			})
 			
 			// Add a cancel handler to return the container to its original state.
@@ -108,7 +109,7 @@
 				var item = document.createElement("li");
 				
 				// Create a clickable link for editing
-				configureNameField(person,item);
+				configureNameField(person,item,sender);
 				
 				// Add the list item to the list
 				peopleList.appendChild(item);
@@ -139,7 +140,7 @@
 		}
 		
 		/* Create a clickable, editable field for the specific person */
-		function configureNameField(person,container){
+		function configureNameField(person,container, marker){
 			// Clear the container element
 			container.innerHTML = "";
 			
@@ -150,7 +151,7 @@
 			
 			// When it is clicked, make the editable field
 			$(link).click(function(){
-				makeEditable(this,container,person);
+				makeEditable(this,container,person,marker);
 			});
 			
 			// Put the link in the container
@@ -240,7 +241,7 @@
 		}
 		
 		/* Perform the AJAX request to update a person's name in Fellowship One */
-		function updatePersonName(person,name,container){
+		function updatePersonName(person,marker,container,name){
 			// Add the loading image to show something is happening.
 			var img = document.createElement("img");
 			img.src = "images/ajax-loader.gif";
@@ -260,17 +261,19 @@
 				dataType: "json",
 				data: options,
 				success: function(data){
-					processUpdateNameCallback(data,container,person);
+					processUpdateNameCallback(data,person,marker,container);
 				},
 				error: genericAjaxErrorCallback
 			});
 		}
 		
 		/* Callback for updatePersonName AJAX request */
-		function processUpdateNameCallback(data,container,orgPerson){
+		function processUpdateNameCallback(data,orgPerson,marker,container){
 			if (data.status == "OK"){
 				// If the request is succesful, set the field back to normal
 				configureNameField(data.data.person,container);
+				pIdx = $.inArray(orgPerson,marker.people);
+				marker.people[pIdx] = data.data.person;
 			}else{
 				// If not, show the error
 				alert(data.data);
